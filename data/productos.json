@@ -1,0 +1,91 @@
+[
+  {
+    "id": "auto-riego",
+    "nombre": "Riego automático para macetas",
+    "categoria": "Riego",
+    "imagen": "assets/img/auto-riego.png",
+    "esImagenReferencia": true,
+    "descripcion": "Bulbo de riego por goteo: se llena de agua y libera humedad de a poco en la tierra.",
+    "variantes": [
+      { "nombre": "Unidad", "precio": 5000 }
+    ]
+  },
+  {
+    "id": "echo-maceta",
+    "nombre": "Eco-maceta",
+    "categoria": "Macetas",
+    "imagen": "assets/img/echo-maceta.webp",
+    "esImagenReferencia": true,
+    "descripcion": "Maceta 130x130x100mm, disponible con plato playo o plato elevado.",
+    "variantes": [
+      { "nombre": "Con plato playo", "precio": 40000 },
+      { "nombre": "Con plato elevado", "precio": 45000 }
+    ]
+  },
+  {
+    "id": "etiquetas",
+    "nombre": "Etiquetas para plantas",
+    "categoria": "Accesorios",
+    "imagen": "assets/img/etiquetas.png",
+    "esImagenReferencia": false,
+    "descripcion": "Etiquetas personalizadas con el nombre de cada planta.",
+    "variantes": [
+      { "nombre": "Unidad (nombre personalizado)", "precio": 1000 }
+    ]
+  },
+  {
+    "id": "macetero-cinetico",
+    "nombre": "Macetero cinético",
+    "categoria": "Macetas",
+    "imagen": "assets/img/macetero-cinetico.webp",
+    "esImagenReferencia": true,
+    "descripcion": "Macetero de diseño ondulado, disponible en dos tamaños.",
+    "variantes": [
+      { "nombre": "107x107x80mm", "precio": 20000 },
+      { "nombre": "134x134x100mm", "precio": 35000 }
+    ]
+  },
+  {
+    "id": "macetero-con-patas",
+    "nombre": "Macetero con patas",
+    "categoria": "Macetas",
+    "imagen": "assets/img/macetero-con-patas.webp",
+    "esImagenReferencia": true,
+    "descripcion": "Macetero acanalado con patas, disponible en dos tamaños.",
+    "variantes": [
+      { "nombre": "Chica 92x92x85mm", "precio": 15000 },
+      { "nombre": "Grande 145x145x135mm", "precio": 45000 }
+    ]
+  },
+  {
+    "id": "macetero-vori",
+    "nombre": "Macetero Vori",
+    "categoria": "Macetas",
+    "imagen": "assets/img/macetero-vori.png",
+    "esImagenReferencia": true,
+    "descripcion": "Macetero de diseño geométrico, 100x100x85mm, con bandeja incluida.",
+    "variantes": [
+      { "nombre": "100x100x85mm", "precio": 45000 }
+    ]
+  },
+  {
+    "id": "tutores",
+    "nombre": "Tutores para plantas",
+    "categoria": "Accesorios",
+    "imagen": "assets/img/tutores.png",
+    "esImagenReferencia": false,
+    "descripcion": "Kit de tutor espiral para sostener plantas trepadoras. Incluye punta para clavar, extensión S, 2 clips, punta final y media S. También hay piezas sueltas para ampliar el kit.",
+    "variantes": [
+      { "nombre": "Kit completo", "precio": 20000 },
+      { "nombre": "Extensión S (individual)", "precio": 5000 },
+      { "nombre": "Clips x5", "precio": 3000 }
+    ]
+  },
+  {
+    "id": "personalizado",
+    "nombre": "Pedido personalizado",
+    "categoria": "Personalizados",
+    "tipo": "formulario",
+    "descripcion": "¿Tenés una idea que no está en el catálogo? Contanos qué necesitás y armamos el presupuesto por WhatsApp."
+  }
+]
