@@ -31,28 +31,6 @@
   --glass-bg-strong: rgba(18, 16, 15, 0.74);
   --glass-border: rgba(240, 236, 225, 0.14);
   --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.09);
-
-  /* Day / night wallpaper */
-  --bg-image: url('../assets/bg-dark.jpg');
-}
-
-:root[data-theme="light"] {
-  --black: #ece4d6;
-  --bone: #2a231c;
-  --bone-soft: #6e6151;
-  --gray: #8a7d68;
-  --line: rgba(30, 22, 14, 0.14);
-  --field-bg: rgba(30, 22, 14, 0.06);
-  --shadow: 0 8px 24px rgba(60, 40, 20, 0.14);
-  --shadow-hover: 0 16px 36px rgba(60, 40, 20, 0.2);
-
-  --glass-bg: rgba(255, 255, 255, 0.5);
-  --glass-bg-soft: rgba(255, 255, 255, 0.38);
-  --glass-bg-strong: rgba(255, 255, 255, 0.7);
-  --glass-border: rgba(30, 22, 14, 0.12);
-  --glass-shadow: 0 8px 28px rgba(60, 40, 20, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.65);
-
-  --bg-image: url('../assets/bg-light.jpg');
 }
 
 * { box-sizing: border-box; }
@@ -67,15 +45,16 @@ body {
   font-family: var(--font-body);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  transition: background 0.35s var(--ease-out), color 0.35s var(--ease-out);
 }
+
+body.is-loading { overflow: hidden; }
 
 body::before {
   content: '';
   position: fixed;
   inset: -40px;
   z-index: -1;
-  background-image: var(--bg-image);
+  background-image: url('../assets/bg-dark.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -164,34 +143,102 @@ h1, h2 {
   .nav-toggle { display: inline-flex; }
 }
 
-/* Theme toggle */
-.theme-toggle {
-  display: inline-flex;
+/* Loading screen */
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  padding: 0;
-  border: 1px solid var(--glass-border);
-  border-radius: 50%;
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  color: var(--bone);
-  cursor: pointer;
-  flex-shrink: 0;
-  transition: background 0.2s var(--ease-out), border-color 0.2s var(--ease-out), transform 0.15s var(--ease-out);
+  gap: 18px;
+  background: var(--black);
+  transition: opacity 0.4s var(--ease-out), visibility 0.4s var(--ease-out);
 }
 
-.theme-toggle:active { transform: scale(0.9); }
-.theme-toggle .icon { width: 19px; height: 19px; fill: currentColor; }
-.theme-toggle .icon-sun { display: none; }
+.loader.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
 
-:root[data-theme="light"] .theme-toggle .icon-moon { display: none; }
-:root[data-theme="light"] .theme-toggle .icon-sun { display: block; }
+.loader-logo {
+  width: 84px;
+  height: 84px;
+  background: #ffffff;
+  border-radius: 50%;
+  padding: 15px;
+  box-sizing: border-box;
+  object-fit: contain;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  animation: loader-pulse 1.6s ease-in-out infinite;
+}
 
-@media (hover: hover) and (pointer: fine) {
-  .theme-toggle:hover { border-color: var(--wine-light); }
+@keyframes loader-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.06); opacity: 0.85; }
+}
+
+.loader-progress {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.loader-bar {
+  position: relative;
+  width: 220px;
+  max-width: 56vw;
+  height: 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(240, 236, 225, 0.45);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 14px rgba(240, 236, 225, 0.3), inset 0 0 6px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+}
+
+.loader-bar-fill {
+  display: block;
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  background: repeating-linear-gradient(
+    135deg,
+    var(--bone) 0 6px,
+    rgba(240, 236, 225, 0.55) 6px 12px
+  );
+  box-shadow: 0 0 10px rgba(240, 236, 225, 0.65);
+  animation: loader-fill 2700ms linear forwards;
+}
+
+@keyframes loader-fill {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+.loader-percent {
+  min-width: 3.2ch;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--bone);
+}
+
+.loader-text {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.72rem;
+  color: var(--bone-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  margin: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loader-logo { animation: none; }
+  .loader-bar-fill { animation: none; width: 100%; }
 }
 
 /* Mobile drawer nav */

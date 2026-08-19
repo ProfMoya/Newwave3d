@@ -189,32 +189,6 @@ function setupScrollReveal(cards) {
   cards.forEach(card => io.observe(card));
 }
 
-const THEME_STORAGE_KEY = 'nw3d-theme';
-
-function setupThemeToggle() {
-  const root = document.documentElement;
-  const btn = document.getElementById('theme-toggle');
-  if (!btn) return;
-
-  const updateLabel = () => {
-    const isLight = root.getAttribute('data-theme') === 'light';
-    btn.setAttribute('aria-label', isLight ? 'Cambiar a modo oscuro' : 'Cambiar a modo claro');
-  };
-  updateLabel();
-
-  btn.addEventListener('click', () => {
-    const isLight = root.getAttribute('data-theme') === 'light';
-    if (isLight) {
-      root.removeAttribute('data-theme');
-      localStorage.setItem(THEME_STORAGE_KEY, 'dark');
-    } else {
-      root.setAttribute('data-theme', 'light');
-      localStorage.setItem(THEME_STORAGE_KEY, 'light');
-    }
-    updateLabel();
-  });
-}
-
 function setupHeaderScroll() {
   const header = document.querySelector('.site-header');
   let ticking = false;
@@ -290,12 +264,40 @@ function setupDrawer() {
   });
 }
 
+const LOADER_MIN_DISPLAY_MS = 2700;
+
+function animateLoaderPercent(durationMs) {
+  const el = document.getElementById('loader-percent');
+  if (!el) return;
+  const steps = 100;
+  let n = 0;
+  const timer = setInterval(() => {
+    n++;
+    el.textContent = `${Math.min(n, 100)}%`;
+    if (n >= steps) clearInterval(timer);
+  }, durationMs / steps);
+}
+
+function hideLoader(startedAt) {
+  const loader = document.getElementById('loader');
+  if (!loader) return;
+  const elapsed = Date.now() - startedAt;
+  const wait = Math.max(0, LOADER_MIN_DISPLAY_MS - elapsed);
+  setTimeout(() => {
+    loader.classList.add('is-hidden');
+    document.body.classList.remove('is-loading');
+    setTimeout(() => loader.remove(), 450);
+  }, wait);
+}
+
 async function init() {
+  const loaderStartedAt = Date.now();
+  animateLoaderPercent(LOADER_MIN_DISPLAY_MS);
+
   setGeneralWhatsappLinks();
   setupLightbox();
   setupHeaderScroll();
   setupDrawer();
-  setupThemeToggle();
 
   try {
     const res = await fetch('data/productos.json');
@@ -314,6 +316,8 @@ async function init() {
     document.getElementById('product-grid').innerHTML =
       '<p class="loading">No se pudo cargar el catálogo. Intentá recargar la página.</p>';
     console.error(err);
+  } finally {
+    hideLoader(loaderStartedAt);
   }
 }
 
