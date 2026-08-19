@@ -73,13 +73,14 @@ body {
 body::before {
   content: '';
   position: fixed;
-  inset: 0;
+  inset: -40px;
   z-index: -1;
   background-image: var(--bg-image);
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
-  opacity: 0.8;
+  opacity: 0.6;
+  filter: blur(11px);
   pointer-events: none;
 }
 
